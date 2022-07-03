@@ -79,4 +79,14 @@ npm run dev
 ```sh
 npm run build
 ```
+### 路由伪静态
 
+需要设置此才能直链访问路由，目前仅提供NGINX服务端，其他服务端请参照Router官方文档。
+
+#### NGINX
+
+```
+location / {
+	try_files $uri $uri/ /index.html$is_args$args;
+}
+```
