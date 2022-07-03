@@ -5,14 +5,11 @@
 <script setup lang="ts">
 import { h } from "vue";
 import { useRouter } from "vue-router";
-const Router = useRouter();
 import type { Component } from "vue";
 import type { MentionOption } from "naive-ui";
 import { NIcon, NMenu } from "naive-ui";
 //引入store
 import { useStatusStore } from "@/stores/status";
-let Store: any = null;
-Store = useStatusStore();
 import {
   GameControllerOutline as GameIcon,
   HomeOutline as HomeIcon,
@@ -20,7 +17,9 @@ import {
   BalloonOutline as BalloonIcon,
   Information as InfoIcon,
 } from "@vicons/ionicons5";
-
+let Store: any = null;
+const Router = useRouter();
+Store = useStatusStore();
 function renderIcon(icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) });
 }
