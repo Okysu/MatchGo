@@ -90,3 +90,9 @@ location / {
 	try_files $uri $uri/ /index.html$is_args$args;
 }
 ```
+
+# DEMO地址
+
+登录注册页：https://match.yby.zone/
+
+后台页面：https://match.yby.zone/admin (需要登录，前台随便输入即可)
