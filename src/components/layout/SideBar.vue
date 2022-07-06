@@ -1,9 +1,9 @@
 <template>
-  <n-menu :options="menuOptions" @update:value="handleUpdateValue" />
+  <n-menu v-model:value="selectedKey" :options="menuOptions" @update:value="handleUpdateValue" />
 </template>
 
 <script setup lang="ts">
-import { h } from "vue";
+import { h, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import type { Component } from "vue";
 import type { MentionOption } from "naive-ui";
@@ -23,7 +23,17 @@ Store = useStatusStore();
 function renderIcon(icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) });
 }
-
+onMounted(() => {
+  //注册message监听事件
+  window.addEventListener("message", (e) => {
+    const message: string[] = e.data.toString().split(",");
+    if (message[0] == "RouterUrlReCaller") {
+      if (message[1] != selectedKey.value) //防止过度刷新
+        selectedKey.value = message[1];
+    }
+  });
+});
+const selectedKey = ref("home");
 const menuOptions = [
   {
     label: "首页",
