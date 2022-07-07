@@ -11,17 +11,20 @@ import {
   NUploadTrigger,
   NInputGroup,
   NDatePicker,
+  NImage,
 } from "naive-ui";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+import sha1 from "sha1";
 import type { UploadFileInfo } from 'naive-ui';
 import { NotificationCall } from "@/postMsg";
-import Vditor from 'vditor';
-import 'vditor/dist/index.css';
-const vditor = ref<Vditor | null>(null);
+import type { API } from "@/components/main/Vditor.vue";
+import edit from "@/components/main/Vditor.vue";
 const matchAbstract = ref("");
 const matchTitle = ref("");
 const mathBanner = ref("");
+const editor = ref<InstanceType<typeof edit> & API | null>(null);
 const richRange = ref<[number, number]>([1653723096000, Date.now()]);
+const salt = ref(Math.random().toString(36).slice(-6));
 const handleFinish = ({
   file,
   event
@@ -37,6 +40,7 @@ const beforeUpload = async (data: {
   file: UploadFileInfo
   fileList: UploadFileInfo[]
 }) => {
+  salt.value = Math.random().toString(36).slice(-6);
   if (
     data.file.file?.type == "image/png" ||
     data.file.file?.type == "image/jpeg"
@@ -47,73 +51,8 @@ const beforeUpload = async (data: {
   return false;
 };
 const CreateRichForm = () => {
-  console.log("MARKDOWN " + vditor.value?.getValue(), "HTML " + vditor.value?.getHTML());
+  if (editor.value) console.log(editor.value.GetValue("html"));
 };
-onMounted(() => {
-  vditor.value = new Vditor('vditor', {
-    toolbar: [
-      "emoji",
-      "headings",
-      "bold",
-      "italic",
-      "strike",
-      "link",
-      "|",
-      "list",
-      "ordered-list",
-      "check",
-      "outdent",
-      "indent",
-      "|",
-      "quote",
-      "line",
-      "code",
-      "inline-code",
-      "insert-before",
-      "insert-after",
-      "|",
-      "upload",
-      "table",
-      "|",
-      "undo",
-      "redo",
-      "|",
-      "fullscreen",
-      "edit-mode",
-      {
-        name: "more",
-        toolbar: [
-          "both",
-          "code-theme",
-          "content-theme",
-          "export",
-          "outline",
-          "preview",
-          "devtools",
-          "info",
-          "help",
-        ],
-      },
-    ],
-    upload: {
-      accept: ['.zip', '.rar', '.7z', '.docx', '.doc', '.avi', '.mp4', '.mov', '.wmv', '.mkv', '.bmp', '.dib', '.png', '.jpg', '.jpeg', '.pbm', '.pgm', '.ppm', '.tif', '.tiff', '.xls', '.xlxs', '.ppt', '.pptx', '.txt'].join(','),
-      token: 'test',
-      withCredentials: false,
-      multiple: false,
-      fieldName: "file",
-      url: 'https://match.api.yby.zone/assets/richsource/file',
-      linkToImgUrl: 'https://match.api.yby.zone/assets/richsource/img/',
-      filename(name: string) {
-        return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').
-          replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').
-          replace('/\\s/g', '')
-      },
-    },
-    after: () => {
-
-    },
-  });
-});
 </script>
 
 <template>
@@ -134,8 +73,15 @@ onMounted(() => {
         </n-list-item>
         <n-list-item>
           <n-thing title="比赛封面" />
+          <n-image width="150" :src="mathBanner" />
           <n-upload abstract action="https://match.api.yby.zone/assets/banner" @before-upload="beforeUpload"
-            @finish="handleFinish" accept="image/png, image/jpeg" :show-file-list="false">
+            @finish="handleFinish" :headers="{
+              'X-Upload-Token': 'test',
+              'Authorization': sha1(['MatchGo', String(Date.now()), salt].join('#')),
+              'Sid': 'MatchGo',
+              'When': String(Date.now()),
+              'Salt': salt,
+            }" accept="image/png, image/jpeg" :show-file-list="false">
             <n-input-group>
               <n-input v-model:value="mathBanner" type="text" placeholder="你可以使用其他网络图片或者自行上传..." />
               <n-upload-trigger #="{ handleClick }" abstract>
@@ -146,7 +92,7 @@ onMounted(() => {
         </n-list-item>
         <n-list-item>
           <n-thing title="比赛具体内容" />
-          <div id="vditor" style="min-height:400px;" />
+          <edit ref="editor"></edit>
         </n-list-item>
         <n-list-item>
           <n-button @click="CreateRichForm" style="float: right" size="large" type="primary">确认创建</n-button>
