@@ -8,7 +8,6 @@ const ClickTo = (url: string) => {
 </script>
 
 <template>
-  <n-scrollbar>
     <div style="width: 96%; padding-left: 2%; padding-top: 25px">
       <n-card title="选择要创建的类型">
         <n-list bordered>
@@ -31,5 +30,4 @@ const ClickTo = (url: string) => {
     </div>
     <n-divider />
     <br />
-  </n-scrollbar>
 </template>
