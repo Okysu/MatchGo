@@ -142,6 +142,15 @@ const router = createRouter({
             subtitle: 'MatchGo'
           }
         },
+        {
+          path: "/file",
+          name: "file",
+          component: () => import("@/views/AdminViews/Make/FileView.vue"),
+          meta: {
+            title: '创建文件上传类型比赛',
+            subtitle: 'MatchGo'
+          }
+        },
       ]
     },
     {
