@@ -3,7 +3,6 @@ export const NotificationCall = (type: string, title: string, message: string, d
     window.parent.postMessage(['NotificationCaller,' + post.join(',')]);
 }
 export const RouterUrlReCall = (url: string) => {
-    if (url === 'select') url = 'make';
     const post: string[] = [url];
     window.parent.postMessage(['RouterUrlReCaller,' + post.join(',')]);
 }
