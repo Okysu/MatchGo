@@ -53,6 +53,9 @@ const beforeUpload = async (data: {
 const CreateRichForm = () => {
   if (editor.value) console.log(editor.value.GetValue("html"));
 };
+const dateDisabled = (ts: number) => {
+  return ts < Date.now();
+}
 </script>
 
 <template>
@@ -69,7 +72,7 @@ const CreateRichForm = () => {
         </n-list-item>
         <n-list-item>
           <n-thing title="比赛时间" />
-          <n-date-picker v-model:value="richRange" type="datetimerange" clearable />
+          <n-date-picker v-model:value="richRange" type="datetimerange" :is-date-disabled="dateDisabled" clearable />
         </n-list-item>
         <n-list-item>
           <n-thing title="比赛封面" />
