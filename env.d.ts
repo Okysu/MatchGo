@@ -9,3 +9,5 @@ declare module '*.vue' {
 declare interface Window {
     $notification: any
 };
+declare interface document {
+};
