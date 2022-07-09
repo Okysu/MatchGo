@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { NGrid, NGi, NCard, NBlockquote, NDivider, NButton } from "naive-ui";
+import { NGrid, NGi, NCard, NBlockquote, NDivider, NButton, NScrollbar } from "naive-ui";
 import { dateFormat, FormatsEnums } from "@/postFunction";
 import { instance } from "@/postRequest";
 import 'vditor/dist/index.css';
@@ -36,36 +36,38 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="width: 96%; padding-left: 2%; padding-top: 25px">
-    <n-grid x-gap="5" :cols="listCols">
-      <n-gi>
-        <n-card title="比赛详情">
-          <template #header-extra>
-            <n-button>确认提交</n-button>
-          </template>
-          <div style="width: 96%; padding-left: 2%; ">
-            <n-blockquote align-text>
-              {{ matchInfo.name }}
-            </n-blockquote>
-            <n-blockquote align-text>
-              {{ dateFormat(matchInfo.date[0], FormatsEnums.YMDHIS) + ' - ' + dateFormat(matchInfo.date[1],
-                  FormatsEnums.YMDHIS)
-              }}
-            </n-blockquote>
-            <n-blockquote align-text>
-              {{ matchInfo.abstract }}
-            </n-blockquote>
-            <div class="vditor-reset" id="content" v-html="matchInfo.content" v-highlight></div>
-          </div>
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <edit style="min-height: 100%;" ref="editor">
-        </edit>
-      </n-gi>
-    </n-grid>
-    <n-divider />
-  </div>
+  <n-scrollbar>
+    <div style="width: 96%; padding-left: 2%; padding-top: 25px">
+      <n-grid x-gap="5" :cols="listCols">
+        <n-gi>
+          <n-card title="比赛详情">
+            <template #header-extra>
+              <n-button>确认提交</n-button>
+            </template>
+            <div style="width: 96%; padding-left: 2%; ">
+              <n-blockquote align-text>
+                {{ matchInfo.name }}
+              </n-blockquote>
+              <n-blockquote align-text>
+                {{ dateFormat(matchInfo.date[0], FormatsEnums.YMDHIS) + ' - ' + dateFormat(matchInfo.date[1],
+                    FormatsEnums.YMDHIS)
+                }}
+              </n-blockquote>
+              <n-blockquote align-text>
+                {{ matchInfo.abstract }}
+              </n-blockquote>
+              <div class="vditor-reset" id="content" v-html="matchInfo.content" v-highlight></div>
+            </div>
+          </n-card>
+        </n-gi>
+        <n-gi>
+          <edit style="min-height: 100%;" ref="editor">
+          </edit>
+        </n-gi>
+      </n-grid>
+      <n-divider />
+    </div>
+  </n-scrollbar>
 </template>
 
 <style>

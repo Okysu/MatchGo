@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { RouterView } from "vue-router";
-import { NNotificationProvider, NScrollbar } from "naive-ui";
+import { NNotificationProvider } from "naive-ui";
 //引入通知组件
 import NotificationAPI from "@/components/main/NotificationAPI.vue";
 const handleShowNotification = (type: string, title: string, message: string, duration: number = 1000) => {
@@ -49,9 +49,7 @@ onMounted(() => {
   <n-notification-provider placement="top">
     <NotificationAPI />
   </n-notification-provider>
-  <n-scrollbar>
     <RouterView />
-  </n-scrollbar>
 
 </template>
 <style>
