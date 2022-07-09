@@ -9,7 +9,6 @@ import {
     NCard,
     NCarousel,
     NIcon,
-    NScrollbar,
 } from "naive-ui";
 // 引入图标
 import { ArrowBack, ArrowForward } from "@vicons/ionicons5";
