@@ -5,9 +5,8 @@ const instance = axios.create({
     timeout: 5000
 });
 instance.interceptors.request.use(function (config) {
-    if (config.params.password) {
+    if (config.params?.password)
         config.params.password = sha1(config.params.password);
-    }
     const salt: string = Math.random().toString(36).slice(-6);
     const when: string = String(Date.now());
     const sid: string = 'MatchGo';
