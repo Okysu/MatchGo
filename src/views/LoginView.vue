@@ -36,13 +36,13 @@ const OptionsChange = () => {
     TabsRef.value = "signin";
   }
 };
-const LoginChecked = ref(false);
+const LoginChecked = ref(true);
 const RegChecked = ref(false);
 const LoginFormRef = ref<FormInst | null>(null);
 const LoginRef = ref(
   {
-    id: '',
-    password: '',
+    id: 'test',
+    password: '123123qw',
   }
 );
 const LoginRules = {
@@ -95,7 +95,7 @@ const LoginCheck = (e: MouseEvent) => {
       Notification("error", "登录失败", "请根据错误提示进行修正或同意相关协议许可...");
     }
   })
-}
+};
 const RegFormRef = ref<FormInst | null>(null);
 const RegRef = ref(
   {
