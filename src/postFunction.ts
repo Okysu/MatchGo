@@ -10,7 +10,7 @@ export const dateFormat = function (timestamp: number, formats: FormatsEnums): s
     // 1. Y-m-d
     // 2. Y-m-d H:i:s
     // 3. Y年m月d日
-    // 4. Y年m月d日 H时i分
+    // 4. Y年m月d日 H时i分s秒
     formats = formats || 'Y-m-d';
 
     const zero = function (value: number): string | number {
