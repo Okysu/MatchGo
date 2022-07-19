@@ -31,7 +31,7 @@ import SideBar from "@/components/layout/SideBar.vue";
 let screenWidth = document.body.clientWidth;
 const collapsed = ref(false);
 onMounted(() => {
-  //注册message监听事件
+  //注册onMounted事件
   screenWidth = document.body.clientWidth;
   collapsed.value = screenWidth < 550;
   window.onresize = () => {
