@@ -24,6 +24,11 @@ onMounted(() => {
       enable: true,
       position: "left"
     },
+    preview: {
+      hljs: {
+        style: 'monokai',
+      }
+    },
     toolbar: [
       "emoji",
       "headings",
