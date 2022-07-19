@@ -18,7 +18,7 @@ const router = createRouter({
     {
       path: "/fill",
       name: "fill",
-      component: () => import("@/views/FillViews/FillView.vue"),
+      component: () => import("@/views/MatchViews/FillView.vue"),
       meta: {
         title: '参加比赛',
         subtitle: 'MatchGo'
