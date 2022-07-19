@@ -4,6 +4,7 @@ import { RouterView } from "vue-router";
 import { NNotificationProvider } from "naive-ui";
 //引入通知组件
 import NotificationAPI from "@/components/main/NotificationAPI.vue";
+emits: ["pointerenter", "pointerleave"];
 const handleShowNotification = (type: string, title: string, message: string, duration: number = 1000) => {
   if (type == "success") {
     window.$notification.success({
@@ -49,7 +50,7 @@ onMounted(() => {
   <n-notification-provider placement="top">
     <NotificationAPI />
   </n-notification-provider>
-    <RouterView />
+  <RouterView />
 
 </template>
 <style>
