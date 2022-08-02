@@ -25,6 +25,15 @@ const router = createRouter({
       },
     },
     {
+      path: "/mfill",
+      name: "fill",
+      component: () => import("@/views/MatchViews/FillViewM.vue"),
+      meta: {
+        title: '参加比赛-移动版',
+        subtitle: 'MatchGo'
+      },
+    },
+    {
       path: "/admin",
       name: "admin",
       redirect: "/home",

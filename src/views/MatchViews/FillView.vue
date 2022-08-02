@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import {
-  NGrid, NGi, NCard, NBlockquote, NDivider, NButton, NScrollbar, NLayout,
+  NCard, NBlockquote, NButton, NLayout,
   NLayoutHeader,
   NLayoutSider,
   NTag
@@ -14,7 +14,6 @@ import type { API } from "@/components/main/Vditor.vue";
 import edit from "@/components/main/Vditor.vue";
 const editor = ref<InstanceType<typeof edit> & API | null>(null);
 let screenWidth = document.body.clientWidth;
-const listCols = ref(2);
 const Route = useRoute();
 const type = ref("0");
 const matchInfo = ref({
@@ -23,14 +22,11 @@ const matchInfo = ref({
   "abstract": "随便说说",
   "content": "",
 });
-const collapsed = ref(false);
 onMounted(() => {
   type.value = Route.query.type as string;
   screenWidth = document.body.clientWidth;
-  collapsed.value = screenWidth < 600;
   window.onresize = () => {
     screenWidth = document.body.clientWidth;
-    collapsed.value = screenWidth < 600;
   };
   instance.post('/match/info', {
   })
@@ -59,8 +55,7 @@ const fullScreen = () => {
     </n-layout-header>
     <n-layout position="absolute" style="top: 44px" has-sider>
       <n-layout-sider content-style="padding: 0px;" :native-scrollbar="false" collapse-mode="transform"
-        :collapsed-width="0" :width="fullScreenValue" bordered show-trigger="bar" :collapsed="collapsed"
-        @collapse="collapsed = true" @expand="collapsed = false">
+        :collapsed-width="0" :width="fullScreenValue" bordered show-trigger="bar">
         <n-card title="比赛详情">
           <template #header-extra>
             <n-tag style="margin:5px" v-if="Date.now() > matchInfo.date[0] && Date.now() < matchInfo.date[1]"
